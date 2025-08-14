@@ -34,6 +34,11 @@ stream.write_unsigned_int24(18)
 bytes_data = stream.data()
 ```
 
+# Used Libraries
+| Library          | License      | Link                                         |
+| ---------------- | ------------ | -------------------------------------------- |
+| BinaryStream     | MPL-2.0      | <https://github.com/GlacieTeam/BinaryStream> |
+
 ## License
 This project is licensed under the **Mozilla Public License 2.0 (MPL-2.0)**.  
 
