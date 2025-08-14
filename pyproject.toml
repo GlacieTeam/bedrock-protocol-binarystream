@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bedrock-protocol-binarystream"
+version = "1.0.0"
+authors = [{ name = "GlacieTeam" }]
+description = "Minecraft BinaryStream Library"
+readme = "README.md"
+requires-python = ">=3"
+license = { text = "MPL-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.urls]
+homepage = "https://github.com/GlacieTeam/bedrock-protocol-binarystream"
+
+[tool.setuptools]
+include-package-data = true
+packages = { find = {} }
+
+[tool.setuptools.package-data]
+"bedrock_protocol.binarystream._internal" = ["*.dll", "*.so", "*.dylib"]
