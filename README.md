@@ -8,7 +8,7 @@ pip install bedrock-protocol-binarystream
 
 ## Usage
 ```Python
-from binarystream import *
+from bedrock_protocol.binarystream import *
 
 stream = BinaryStream()
 stream.write_byte(1)
