@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bedrock-protocol-binarystream"
-version = "1.0.0"
+version = "1.1.0"
 authors = [{ name = "GlacieTeam" }]
 description = "Minecraft BinaryStream Library"
 readme = "README.md"
@@ -25,4 +25,5 @@ include-package-data = true
 packages = { find = {} }
 
 [tool.setuptools.package-data]
-"bedrock_protocol.binarystream._internal" = ["*.dll", "*.so", "*.dylib"]
+"bedrock_protocol.binarystream._internal.x86_64" = ["*.dll", "*.so", "*.dylib"]
+"bedrock_protocol.binarystream._internal.arm64" = ["*.dll", "*.so", "*.dylib"]
