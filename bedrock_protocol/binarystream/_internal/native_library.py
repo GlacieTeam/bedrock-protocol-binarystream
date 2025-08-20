@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 import os
+import platform
 import sys
 import ctypes
 import threading
@@ -32,16 +33,18 @@ class NativeLibrary:
         if cls._initialized or cls._initialization_error is not None:
             return
 
-        lib_dir = os.path.dirname(os.path.abspath(__file__))
+        arch = platform.machine().lower()
+        if arch == "amd64":
+            arch = "x86_64"
+        elif arch == "aarch64":
+            arch = "arm64"
+
+        lib_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), arch)
         platform_map = {
             "win32": "BinaryStream.dll",
             "linux": "libBinaryStream.so",
-            # "darwin": "libBinaryStream.dylib",
+            "darwin": "libBinaryStream.dylib",
         }
-
-        if sys.platform not in platform_map:
-            cls._initialization_error = OSError(f"Unsupported platform: {sys.platform}")
-            raise cls._initialization_error
 
         lib_name = platform_map[sys.platform]
         dll_path = os.path.join(lib_dir, lib_name)
