@@ -54,11 +54,11 @@ class BinaryStream(ReadOnlyBinaryStream):
         """Clears the stream buffer and resets read state."""
         self._lib_handle.binary_stream_reset(self._stream_handle)
 
-    def data(self) -> bytearray:
-        """Gets direct access to the mutable byte buffer.
+    def data(self) -> bytes:
+        """Gets direct access to the byte buffer.
 
         Returns:
-            The underlying bytearray containing stream data
+            The underlying bytes containing stream data
         """
         buf = self._lib_handle.binary_stream_get_buffer(self._stream_handle)
         result = bytes(ctypes.string_at(buf.data, buf.size))
