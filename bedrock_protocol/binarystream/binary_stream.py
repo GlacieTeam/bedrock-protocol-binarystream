@@ -18,11 +18,14 @@ class BinaryStream(ReadOnlyBinaryStream):
     various data types to the stream.
     """
 
-    def __init__(self, buffer: Union[bytearray, bytes, None] = None) -> None:
+    def __init__(
+        self, buffer: Union[bytearray, bytes, None] = None, big_endian: bool = False
+    ) -> None:
         """Initializes a binary stream.
 
         Args:
             buffer: The buffer to read from/write to
+            big_endian: Whether to use big endian byte order
         """
         self._lib_handle = get_library_handle()
         if buffer is not None:
@@ -33,6 +36,7 @@ class BinaryStream(ReadOnlyBinaryStream):
                     ctypes.cast(buffer_ptr, ctypes.POINTER(ctypes.c_uint8)),
                     length,
                     True,
+                    big_endian,
                 )
             elif isinstance(buffer, bytes):
                 buffer_ptr = (ctypes.c_uint8 * length).from_buffer_copy(buffer)
@@ -40,11 +44,12 @@ class BinaryStream(ReadOnlyBinaryStream):
                     ctypes.cast(buffer_ptr, ctypes.POINTER(ctypes.c_uint8)),
                     length,
                     True,
+                    big_endian,
                 )
             else:
                 raise TypeError("Unsupported buffer type. Use bytearray or bytes.")
         else:
-            self._stream_handle = self._lib_handle.binary_stream_create()
+            self._stream_handle = self._lib_handle.binary_stream_create(big_endian)
 
     def __del__(self):
         """Free memory."""

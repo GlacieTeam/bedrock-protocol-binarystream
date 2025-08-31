@@ -20,12 +20,15 @@ class ReadOnlyBinaryStream:
     _stream_handle: ctypes.c_void_p
     _lib_handle: ctypes.CDLL
 
-    def __init__(self, buffer: Union[bytes, bytearray]) -> None:
+    def __init__(
+        self, buffer: Union[bytes, bytearray], big_endian: bool = False
+    ) -> None:
         """Initializes a read-only binary stream.
 
         Args:
             buffer: The binary data to read from
             copy_buffer: Whether to create a copy of the input buffer
+            big_endian: Whether to use big endian byte order
         """
         length = len(buffer)
         if isinstance(buffer, bytes):
@@ -37,12 +40,13 @@ class ReadOnlyBinaryStream:
             raise TypeError("Unsupported buffer type. Use bytearray or bytes.")
         self._lib_handle = get_library_handle()
         self._stream_handle = self._lib_handle.read_only_binary_stream_create(
-            ctypes.cast(buf, ctypes.POINTER(ctypes.c_uint8)), length, True
+            ctypes.cast(buf, ctypes.POINTER(ctypes.c_uint8)), length, True, big_endian
         )
 
     def __del__(self):
         """Free memory."""
-        get_library_handle().read_only_binary_stream_destroy(self._stream_handle)
+        if self._stream_handle is not None:
+            get_library_handle().read_only_binary_stream_destroy(self._stream_handle)
 
     def size(self) -> int:
         """Gets the total size of the buffer.

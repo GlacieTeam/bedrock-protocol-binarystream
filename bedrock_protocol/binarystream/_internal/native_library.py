@@ -74,9 +74,8 @@ class NativeLibrary:
             ctypes.POINTER(ctypes.c_uint8),
             ctypes.c_size_t,
             ctypes.c_bool,
+            ctypes.c_bool,
         ]
-        cls._lib_handle.read_only_binary_stream_create_empty.restype = ctypes.c_void_p
-        cls._lib_handle.read_only_binary_stream_create_empty.argtypes = []
         cls._lib_handle.read_only_binary_stream_destroy.restype = None
         cls._lib_handle.read_only_binary_stream_destroy.argtypes = [ctypes.c_void_p]
         cls._lib_handle.read_only_binary_stream_size.restype = ctypes.c_size_t
@@ -201,11 +200,12 @@ class NativeLibrary:
         ]
         # BinaryStream
         cls._lib_handle.binary_stream_create.restype = ctypes.c_void_p
-        cls._lib_handle.binary_stream_create.argtypes = []
+        cls._lib_handle.binary_stream_create.argtypes = [ctypes.c_bool]
         cls._lib_handle.binary_stream_create_with_buffer.restype = ctypes.c_void_p
         cls._lib_handle.binary_stream_create_with_buffer.argtypes = [
             ctypes.POINTER(ctypes.c_uint8),
             ctypes.c_size_t,
+            ctypes.c_bool,
             ctypes.c_bool,
         ]
         cls._lib_handle.binary_stream_destroy.restype = None
